@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400|Poppins:400");
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -6,8 +8,126 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+h1,h2{
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+}
+.grid{
+  margin:  auto;
+  display: grid;
+  max-width: 600px;
+  max-height: 400px;
+  gap: 10px;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+}
+.row{
+  display: flex;
+  gap: 10px;
+  border: 2px solid black;
+  border-radius: 0.2rem;
+}
+svg :hover{
+  cursor: pointer;
+}
+svg{
+  padding: 0.15rem;
+}
+.image-section{
+  flex-grow: 2;
+  height: 100%;
+}
+.control-section{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  height: 100%;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+}
+img{
+  width:100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 0.125rem;
+}
+.controls-grid{
+   display: grid;
+    height: auto;
+    grid-template-areas: 
+    "up"
+    "left right"
+    "down";
+    grid-template-rows: repeat(3,33%);
+    grid-template-columns: 1fr 1fr;
+}
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.controls-grid:nth-child(1){
+  grid-area: up;
+}
+
+.controls-grid:nth-child(2){
+  grid-area: left;
+}
+.controls-grid:nth-child(3){
+  grid-area: right;
+}
+.controls-grid:nth-child(4){
+  grid-area: down;
+}
+button{
+  border: transparent;
+}
+button :hover{
+  cursor: pointer;
+}
+.form {
+  margin: auto;
+  width: 80%;
+  max-width: var(--fixed-width);
+  background-color: var(--white);
+  margin: auto;
+  font-family: var(--heading-font);
+  letter-spacing: var(--letterSpacing);
+  transition: var(--transition);
+  box-shadow: var(--shadow-1);
+  text-transform: capitalize;
+  padding: 2rem 2.5rem;
+}
+.form h4 {
+  font-weight: bold;
+}
+.form-label {
+  display: block;
+  font-size: var(--small-text);
+  margin-bottom: 0.5rem;
+  text-transform: capitalize;
+  letter-spacing: var(--letterSpacing);
+}
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--borderRadius);
+  background: var(--backgroundColor);
+  border: 1px solid var(--grey-200);
+}
+
+.form-row {
+  margin-bottom: var(--margin-bottom);
+}
+
+.form-textarea {
+  height: 7rem;
+}
+::placeholder {
+  font-family: inherit;
+  color: var(--grey-400);
+}
+.form-alert {
+  color: var(--red-dark);
+  letter-spacing: var(--letterSpacing);
+  text-transform: capitalize;
 }

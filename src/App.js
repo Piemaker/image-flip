@@ -1,57 +1,88 @@
 import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
-
+import image from "../src/Electrifiers.png"
+import Image from './features/components/Image';
+import Controls from './features/components/Controls';
+import {useRef, useState, useEffect} from "react"
+import "../src/main.css"
+import checkImage from './features/components/checkImage';
+import classnames from "classnames";
 function App() {
+  
+  const handleSubmit =   (e)=>{
+    e.preventDefault();
+    let userUrl = inputRef.current.value;
+     let validImage =  checkImage(userUrl);
+    if( validImage){
+    setUrl(userUrl);
+    }
+    else{
+      inputRef.current.value = "";
+      setIsValid(false);
+    }
+    
+  }
+    const [url,setUrl] = useState(image);
+    const imageRef1 = useRef(null);
+    const imageRef2 = useRef(null);
+    const imageRef3 = useRef(null);
+    const imageRef4 = useRef(null);
+    const refArray = [imageRef1, imageRef2, imageRef3 , imageRef4]
+    const inputRef = useRef(null);
+    const [isValid, setIsValid] = useState(true);
+  const render = Array.from(Array(4).keys()).map((x, index) => {
+    return (
+      <article key={index} className="row">
+        <Image
+          props={{ src: url, alt: "An image", imageRef: refArray[index] }}
+        ></Image>
+        <Controls imageRef={refArray[index]}></Controls>
+      </article>
+    );
+  });
+  
+  useEffect(() => {
+    if(!isValid){
+      let timeOut = setTimeout(()=>{
+      setIsValid(true);
+      },2000)
+      return ()=>{
+        clearTimeout(timeOut)
+      }  
+    }
+  }, [isValid]); 
+  const inputClassname = classnames(
+    {"form-input" : isValid},
+    { "alert": !isValid },
+    { "alert-danger": !isValid }
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
+    <section>
+      <h1>Image Flipper</h1>
+      <form className="form">
+        <h4>Supply an image url</h4>
+        <div className="form-row">
+          {!isValid && <h5>Set Valid URL</h5>}
+          <label className = "form-label" htmlFor="url">Enter URL</label>
+          <input
+            className={inputClassname} 
+            name="url"
+            type="text"
+            ref={inputRef}
+          />
+        </div>
+        <div className="form-row  flex-center">
+          <button
+            type="submit"
+            className="btn btn-submit "
+            onClick={handleSubmit}
           >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+            Set Picture
+          </button>
+        </div>
+      </form>
+      <div className="grid">{render}</div>
+    </section>
   );
 }
 
