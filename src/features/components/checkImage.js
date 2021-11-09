@@ -1,13 +1,18 @@
-export default function imageExists(image_url) {
-    try {
-        var http = new XMLHttpRequest();
+export default function checkIfImageExists(url, callback) {
+  const img = new Image();
 
-        http.open("HEAD", image_url, false);
-        http.send();
+  img.src = url;
 
-        return http.status != 404;
-    } catch (error) {
-       return false; 
-    }
-  
+  if (img.complete) {
+    callback(true);
+  } else {
+    img.onload = () => {
+      callback(true);
+    };
+
+    img.onerror = () => {
+      callback(false);
+    };
+  }
 }
+    

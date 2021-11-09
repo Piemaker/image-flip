@@ -11,15 +11,14 @@ function App() {
   const handleSubmit =   (e)=>{
     e.preventDefault();
     let userUrl = inputRef.current.value;
-     let validImage =  checkImage(userUrl);
-    if( validImage && userUrl){
-    setUrl(userUrl);
-    }
-    else{
-      inputRef.current.value = "";
-      setIsValid(false);
-    }
-    
+    let validImage = checkImage(userUrl, (exists) => {
+      if (exists) {
+        setUrl(userUrl);
+      } else {
+        inputRef.current.value = "";
+        setIsValid(false);
+      }
+    });
   }
     const [url,setUrl] = useState(image);
     const imageRef1 = useRef(null);
