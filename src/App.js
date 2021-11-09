@@ -12,7 +12,7 @@ function App() {
     e.preventDefault();
     let userUrl = inputRef.current.value;
      let validImage =  checkImage(userUrl);
-    if( validImage){
+    if( validImage && userUrl){
     setUrl(userUrl);
     }
     else{
